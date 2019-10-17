@@ -1,28 +1,37 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <h2> Listado de documentales</h2>
+
+    <div v-for="el in data.results" :key="el.id" >
+
+      <p> Titulo {{ el.title }}</p>
+      <p>{{ el.description }} </p>
+      <a :href="el.video"> {{ el.video }}</a>
+    </div>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import Vue from 'vue'
+import axios from 'axios'
+import VueAxios from 'vue-axios'
 
+Vue.use(VueAxios, axios)
 export default {
-  name: 'app',
-  components: {
-    HelloWorld
+  data() {
+    return {
+      username: '',
+      data: [],
+      errorMsg: ''
+    }
+  },
+  mounted: function (){
+     const api = `https://documentaries-api.herokuapp.com/api/documentaries/?format=json`
+    
+      Vue.axios.get(api).then(response => {
+        this.data = response.data
+      })
+      
   }
 }
 </script>
-
-<style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>

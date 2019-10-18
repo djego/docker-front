@@ -2,7 +2,7 @@
   <div id="app">
     <h2> Listado de documentales</h2>
 
-    <div v-for="el in data.results" :key="el.id" >
+    <div v-for="el in data" :key="el.id" >
 
       <p> Titulo {{ el.title }}</p>
       <p>{{ el.description }} </p>
@@ -12,6 +12,7 @@
 </template>
 
 <script>
+
 import Vue from 'vue'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
@@ -26,7 +27,7 @@ export default {
     }
   },
   mounted: function (){
-     const api = `https://documentaries-api.herokuapp.com/api/documentaries/?format=json`
+     const api = `http://localhost:5000/?format=json`
     
       Vue.axios.get(api).then(response => {
         this.data = response.data
